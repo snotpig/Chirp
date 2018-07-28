@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp", "Chirp2\Chirp.csproj", "{E9514099-30A3-4161-9FF4-7817C0F92F1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp", "Chirp\Chirp.csproj", "{E9514099-30A3-4161-9FF4-7817C0F92F1D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0C49D42E-B9BD-423B-A37E-E3B9D0ACA5DF}"
 EndProject
