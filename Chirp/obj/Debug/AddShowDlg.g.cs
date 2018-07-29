@@ -76,7 +76,7 @@ namespace Chirp {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Chirp2;component/addshowdlg.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Chirp;component/addshowdlg.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\AddShowDlg.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

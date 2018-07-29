@@ -52,7 +52,7 @@ namespace Chirp
 
         public void Go(IEnumerable<Show> items, BackgroundWorker worker)
         {
-            var total = items.Count();
+            var total = 2 * items.Count();
             var i = 0;
             foreach (Show show in items)
             {
@@ -66,7 +66,8 @@ namespace Chirp
                     var file = TagLib.File.Create(show.FilePath, TagLib.ReadStyle.None);
                     file.Tag.Title = $"{show.ShortName}{episode}{date}{title}";
                     file.Save();
-
+                    i++;
+                    worker.ReportProgress(i * 100 / total);
                     var newPath = show.FilePath.Replace(show.FileName, $"{showName}{episode}{date}{title}.m4a");
                     File.Move(show.FilePath, newPath);
                 }
@@ -131,7 +132,7 @@ namespace Chirp
             if (!Directory.Exists(@"C:\ProgramData\Snotsoft\Chirp"))
                 Directory.CreateDirectory(@"C:\ProgramData\Snotsoft\Chirp");
 
-            using (var stream = File.OpenWrite(@"C:\ProgramData\Snotsoft\Chirp\SavedData.xml"))
+            using (var stream = File.Open(@"C:\ProgramData\Snotsoft\Chirp\SavedData.xml", FileMode.Create, FileAccess.Write))
             {
                 serializer.Serialize(stream, saveObject);
             }

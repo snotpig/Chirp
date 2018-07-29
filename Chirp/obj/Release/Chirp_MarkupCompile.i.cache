@@ -1,4 +1,4 @@
-﻿Chirp2
+﻿Chirp
 
 
 winexe
@@ -16,5 +16,5 @@ C:\Projects\Chirp\Chirp\Chirp\App.xaml
 92-1553238884
 AddShowDlg.xaml;EditTypesDlg.xaml;MainWindow.xaml;
 
-False
+True
 

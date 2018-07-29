@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="Chirp" Height="450" Width="1400"
-        MinWidth="970" MinHeight="250"
+        MinWidth="930" MinHeight="250"
+        Background="#FF96A9CC"
         Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
@@ -17,21 +18,20 @@
         </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="628"></ColumnDefinition>
+                <ColumnDefinition Width="620"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="80"></ColumnDefinition>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="200"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBox Name="txtFolder" Margin="5 2"/>
-            <Button Grid.Column="1" Name="btnFolder" Click="btnFolder_Click" HorizontalAlignment="Left" Width="30" Margin="0 2">
+            <TextBox Name="txtFolder" Margin="5,2,2,2" FontSize="14"/>
+            <Button Grid.Column="1" Name="btnFolder" Click="btnFolder_Click" HorizontalAlignment="Left" Width="30" Margin="0,2">
                 <Image Source="Folder.png"></Image>
             </Button>
-            <Button Grid.Column="2" Name="btnRefresh" Click="btnRefresh_Click" Width="30" Margin="0 2" HorizontalAlignment="Center">
-               <Image Source="refresh-icon.png"></Image>
-            </Button>
-            <StackPanel Grid.Column="3" Orientation="Horizontal" FlowDirection="RightToLeft" Margin="1 0">
-                <Button Name="btnAdd" Click="btnAdd_Click" HorizontalAlignment="Right" Width="70" Margin="3 2">Add Show</Button>
-                <Button Name="btnAddType" Click="btnAddType_Click" HorizontalAlignment="Right" Width="70" Margin="3 2">Edit Types</Button>
+            <StackPanel Grid.Column="2" Orientation="Horizontal" FlowDirection="RightToLeft" Margin="2,0" HorizontalAlignment="Right">
+                <Button Name="btnAdd" Click="btnAdd_Click" HorizontalAlignment="Right" Width="70" Margin="3,2">Add Show</Button>
+                <Button Name="btnAddType" Click="btnAddType_Click" HorizontalAlignment="Right" Width="70" Margin="3,2">Edit Types</Button>
+                <Button Name="btnRefresh" Click="btnRefresh_Click" Width="30" Margin="3 2">
+                    <Image Source="refresh-icon.png"></Image>
+                </Button>
             </StackPanel>
         </Grid>
         <DataGrid Name="datagrid" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="false">
@@ -63,12 +63,12 @@
                 <DataGridTextColumn Width="310" MinWidth="50"
 				                    Binding="{Binding Title}"
 				                    Header="Title" />
-                <DataGridTextColumn Width="500" MinWidth="80"
+                <DataGridTextColumn Width="*" MinWidth="500"
 				                    Binding="{Binding FileName}"
 				                    Header="File Name" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="2" Name="btnGo" Click="btnGo_Click">Go</Button>
+        <Button Grid.Row="2" Name="btnGo" Click="btnGo_Click" Background="#FF96A9CC">Go</Button>
         <ProgressBar Grid.Row="2" Name="progress" Minimum="0" Maximum="100" Visibility="Collapsed"></ProgressBar>
     </Grid>
 </Window>

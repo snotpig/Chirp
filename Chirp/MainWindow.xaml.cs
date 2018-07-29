@@ -19,7 +19,16 @@ namespace Chirp
             log4net.Config.XmlConfigurator.Configure();
             _chirper = new Chirper();
             txtFolder.Text = _chirper.Folder;
+            progress.Value = 0;
+            GetShows();
+        }
+
+        private void GetShows()
+        {
             datagrid.ItemsSource = _chirper.GetShows();
+            progress.Visibility = Visibility.Collapsed;
+            btnGo.Visibility = Visibility.Visible;
+            btnGo.IsEnabled = datagrid.Items.Count > 0;
         }
 
         private void btnGo_Click(object sender, RoutedEventArgs e)
@@ -43,13 +52,12 @@ namespace Chirp
         private void ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progress.Value = e.ProgressPercentage;
+            //datagrid.ItemsSource = _chirper.GetShows();
         }
 
         private void Finish(object sender, RunWorkerCompletedEventArgs e)
         {
-            btnGo.Visibility = Visibility.Visible;
-            progress.Visibility = Visibility.Collapsed;
-            datagrid.ItemsSource = _chirper.GetShows();
+            GetShows();
         }
 
         private void btnFolder_Click(object sender, RoutedEventArgs e)
@@ -59,7 +67,7 @@ namespace Chirp
             if (folderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 txtFolder.Text = _chirper.Folder = folderDialog.SelectedPath;
-                datagrid.ItemsSource = _chirper.GetShows();
+                GetShows();
             }              
         }
 
@@ -70,7 +78,7 @@ namespace Chirp
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            datagrid.ItemsSource = _chirper.GetShows().ToList();
+            GetShows();
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -83,8 +91,9 @@ namespace Chirp
             {
                 var newShows = addShowDlg.dgNew.Items.OfType<NewShow>().Where(s => s.Include);
                 var existingShows = _chirper.GetShows().Select(s => s.ShowName).ToList();
-                _chirper.AddNewShows(newShows.Select(s => s.Name).Distinct().Where(s => !existingShows.Contains(s)).ToDictionary(s => s, s => newShows.First(n => n.Name == s).ShortName));
-                datagrid.ItemsSource = _chirper.GetShows().ToList();
+                _chirper.AddNewShows(newShows.Select(s => s.Name).Distinct()
+                    .Where(s => !existingShows.Contains(s)).ToDictionary(s => s, s => newShows.First(n => n.Name == s).ShortName));
+                GetShows();
             }
         }
 
@@ -97,7 +106,7 @@ namespace Chirp
             if (result.Value)
             {
                 _chirper.SetTypes(addTypeDlg.dgType.Items.OfType<TypeItem>().Where(i => i.Include).Select(i => i.Type).ToList());
-                datagrid.ItemsSource = _chirper.GetShows().ToList();
+                GetShows();
             }
         }
     }

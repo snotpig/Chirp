@@ -76,7 +76,7 @@ namespace Chirp {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Chirp2;component/edittypesdlg.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Chirp;component/edittypesdlg.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\EditTypesDlg.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
