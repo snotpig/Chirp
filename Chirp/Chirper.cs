@@ -32,7 +32,8 @@ namespace Chirp
                 var fullTitle = string.Join("-", (parts.Where((w, i) => i > 0))).Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries);
                 var s = Array.IndexOf(show, "Series");
                 var isDate = DateTime.TryParse(fullTitle.FirstOrDefault()?.Trim(new[] { '_' }), out var date);
-                var title = string.Join(" ", fullTitle.Where((w, i) => (s < 0 && !isDate) || i > 0));
+                var isEpisode = int.TryParse(fullTitle.FirstOrDefault()?.Trim(new[] { '.' }), out var episode);
+                var title = string.Join(" ", fullTitle.Where((w, i) => (s < 0 && !(isDate || isEpisode)) || i > 0));
                 var showName = string.Join("_", show.Where((w, i) => s < 0 || i < s));
 
                 return new Show
@@ -43,7 +44,7 @@ namespace Chirp
                     ShortName = _showNames[showName],
                     Title = title.StartsWith("Episode") ? "" : title,
                     Series = s > 0 && show.Length > s ? int.Parse(show.ElementAt(s + 1)) : 0,
-                    Episode = s > 0 ? int.Parse(string.Join("", fullTitle.First().Where(c => char.IsDigit(c)))) : 0,
+                    Episode = isEpisode ? episode : 0,
                     Date = date == DateTime.MinValue ? new DateTime?() : date
                 };
             });
@@ -56,25 +57,18 @@ namespace Chirp
             var i = 0;
             foreach (Show show in items)
             {
-                try
-                {
-                    var showName = show.ShowName.Replace(' ', '_');
-                    var episode = $"{(show.Series > 0 ? "_" + show.Series.ToString() + "-" : "")}{(show.Episode > 0 ? show.Episode.ToString() : "")}";
-                    var date = show.Date.HasValue ? $"_{show.Date.Value.ToString("yyyyMMdd")}" : "";
-                    var title = string.IsNullOrWhiteSpace(show.Title) ? "" : $"_{show.Title.Replace(' ', '_')}";
+                var showName = show.ShowName.Replace(' ', '_');
+                var episode = $"{(show.Episode > 0 ? "_" + show.Series.ToString() + "-" : "")}{(show.Episode > 0 ? show.Episode.ToString() : "")}";
+                var date = show.Date.HasValue ? $"_{show.Date.Value.ToString("yyyyMMdd")}" : "";
+                var title = string.IsNullOrWhiteSpace(show.Title) ? "" : $"_{show.Title.Replace(' ', '_')}";
 
-                    var file = TagLib.File.Create(show.FilePath, TagLib.ReadStyle.None);
-                    file.Tag.Title = $"{show.ShortName}{episode}{date}{title}";
-                    file.Save();
-                    i++;
-                    worker.ReportProgress(i * 100 / total);
-                    var newPath = show.FilePath.Replace(show.FileName, $"{showName}{episode}{date}{title}.m4a");
-                    File.Move(show.FilePath, newPath);
-                }
-                catch(Exception ex)
-                {                  
-                    log.Error("Exception thrown in Go method", ex);
-                }
+                var file = TagLib.File.Create(show.FilePath, TagLib.ReadStyle.None);
+                file.Tag.Title = $"{show.ShortName}{episode}{date}{title}";
+                file.Save();
+                i++;
+                worker.ReportProgress(i * 100 / total);
+                var newPath = show.FilePath.Replace(show.FileName, $"{showName}{episode}{date}{title}.m4a");
+                File.Move(show.FilePath, newPath);
                 i++;
                 worker.ReportProgress(i * 100 / total);
             }

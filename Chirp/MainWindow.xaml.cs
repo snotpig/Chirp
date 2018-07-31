@@ -1,4 +1,5 @@
 ﻿using log4net;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -19,7 +20,6 @@ namespace Chirp
             log4net.Config.XmlConfigurator.Configure();
             _chirper = new Chirper();
             txtFolder.Text = _chirper.Folder;
-            progress.Value = 0;
             GetShows();
         }
 
@@ -33,6 +33,7 @@ namespace Chirp
 
         private void btnGo_Click(object sender, RoutedEventArgs e)
         {
+            progress.Value = 0;
             btnGo.Visibility = Visibility.Collapsed;
             progress.Visibility = Visibility.Visible;
 
@@ -57,6 +58,8 @@ namespace Chirp
 
         private void Finish(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (e.Error != null)
+                throw e.Error;
             GetShows();
         }
 

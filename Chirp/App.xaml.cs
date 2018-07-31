@@ -13,11 +13,10 @@ namespace Chirp
         protected override void OnStartup(StartupEventArgs e)
         {
             log4net.Config.XmlConfigurator.Configure();
-            log.Info("        =============  Started Logging  =============        ");
             base.OnStartup(e);
         }
 
-        void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             log.Error(e.Exception.Message, e.Exception);
             e.Handled = true;
