@@ -93,7 +93,7 @@ namespace Chirp
                     Type = f.Type,
                     Include = true
                 };
-            }).ToList();
+            }).GroupBy(f => f.Name).Select(g => g.First()).ToList();
         }
 
         public ICollection<string> GetTypes()
