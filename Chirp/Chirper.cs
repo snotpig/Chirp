@@ -147,7 +147,7 @@ namespace Chirp
             }
             else
             {
-                Folder = @"C:\Users\Adam\Downloads\iPlayer Recordings\Radio\Test";
+                Folder = @"C:\";
                 _fileTypes = new HashSet<string> { "original" };
                 _showNames = new Dictionary<string, string> { { "5_live_Science", "5LiveScience" } };
             }

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Projects\Chirp\Chirp\Chirp\obj\Debug\
+D:\Projects\GitHub\Chirp\Chirp\obj\Debug\
 Chirp
 none
 false
 DEBUG;TRACE
-C:\Projects\Chirp\Chirp\Chirp\App.xaml
+D:\Projects\GitHub\Chirp\Chirp\App.xaml
 3209137066
 1-1575529357
-13-530656780
-92-1553238884
+17-165783070
+92946292225
 AddShowDlg.xaml;EditTypesDlg.xaml;MainWindow.xaml;
 
-False
+True
 
