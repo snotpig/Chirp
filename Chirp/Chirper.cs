@@ -25,15 +25,15 @@ namespace Chirp
         {
             var files = GetAudioFiles();
 
-            var shows = files.Where(f => _fileTypes.Contains(f.Type) && _showNames.Keys.Any(k => f.ShowName.StartsWith(k))).Select(file =>
+            var shows = files.Where(f => _fileTypes.Contains(f.Type) && _showNames.Keys.Any(k => GetShowName(f.ShowFullName) == k)).Select(file =>
             {
-                var parts = file.ShowName.Split(new[] { "-" }, StringSplitOptions.RemoveEmptyEntries);
+                var parts = file.ShowFullName.Split(new[] { "-" }, StringSplitOptions.RemoveEmptyEntries);
                 var show = parts.First().Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries);
                 var fullTitle = string.Join("-", (parts.Where((w, i) => i > 0))).Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries);
                 var s = Array.IndexOf(show, "Series");
                 var isDate = DateTime.TryParse(fullTitle.FirstOrDefault()?.Trim(new[] { '_' }), out var date);
                 var isEpisode = int.TryParse(fullTitle.FirstOrDefault()?.Trim(new[] { '.' }), out var episode);
-                var title = string.Join(" ", fullTitle.Where((w, i) => (s < 0 && !(isDate || isEpisode)) || i > 0));
+                var title = string.Join(" ", fullTitle.Where((w, i) => !(isDate || isEpisode) || i > 0));
                 var showName = string.Join("_", show.Where((w, i) => s < 0 || i < s));
 
                 return new Show
@@ -58,7 +58,7 @@ namespace Chirp
             foreach (Show show in items)
             {
                 var showName = show.ShowName.Replace(' ', '_');
-                var episode = $"{(show.Episode > 0 ? "_" + show.Series.ToString() + "-" : "")}{(show.Episode > 0 ? show.Episode.ToString() : "")}";
+                var episode = $"{(show.Series > 0 && show.Episode > 0 ? $"_{show.Series}-" : "")}{(show.Episode > 0 ? show.Episode.ToString() : "")}";
                 var date = show.Date.HasValue ? $"_{show.Date.Value.ToString("yyyyMMdd")}" : "";
                 var title = string.IsNullOrWhiteSpace(show.Title) ? "" : $"_{show.Title.Replace(' ', '_')}";
 
@@ -83,9 +83,9 @@ namespace Chirp
         {
             var files = GetAudioFiles().Where(f => _fileTypes.Contains(f.Type));
 
-            return files.Where(f => !_showNames.Keys.Any(k => f.ShowName.StartsWith(k))).Select(f =>
+            return files.Where(f => !_showNames.Keys.Any(k => GetShowName(f.ShowFullName) == k)).Select(f =>
             {
-                var name = f.ShowName.Split(new[] { "-", "Series" }, StringSplitOptions.RemoveEmptyEntries).First().TrimEnd(new[] { '_' });
+                var name = f.ShowFullName.Split(new[] { "-", "Series" }, StringSplitOptions.RemoveEmptyEntries).First().TrimEnd(new[] { '_' });
                 return new NewShow
                 {
                     Name = name,
@@ -165,9 +165,15 @@ namespace Chirp
                         Path = file,
                         FileName = fileName,
                         Type = parts.Last(),
-                        ShowName = string.Join("_", parts.Where((string s, int i) => i < parts.Length - 2))
+                        ShowFullName = string.Join("_", parts.Where((string s, int i) => i < parts.Length - 2))
                     };
                 });
         }
+
+		private string GetShowName(string showFullName)
+		{
+			return showFullName
+				.Split(new[] { "-", "Series" }, StringSplitOptions.RemoveEmptyEntries).First().Trim(new[] { '_' });
+		}
     }
 }
