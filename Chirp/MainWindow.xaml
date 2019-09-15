@@ -35,6 +35,9 @@
             </StackPanel>
         </Grid>
         <DataGrid Name="datagrid" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="false">
+			<DataGrid.Resources>
+				<local:ColourConverter x:Key="ColourConverter"/>
+			</DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Width="240" MinWidth="40"
 				                    Binding="{Binding ShowName}"
@@ -49,9 +52,9 @@
 				                    Binding="{Binding Episode}"
 				                    Header="Episode" />
                 <DataGridTemplateColumn Width="65" MinWidth="65" Header="Date">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Date, StringFormat=\{0:dd-MM-yyyy \}}"></TextBlock>
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Date, StringFormat=\{0:dd-MM-yyyy \}}" Background="{Binding Converter={StaticResource ColourConverter}}"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -63,7 +66,8 @@
                 <DataGridTextColumn Width="310" MinWidth="50"
 				                    Binding="{Binding Title}"
 				                    Header="Title" />
-                <DataGridTextColumn Width="*" MinWidth="500"
+                <DataGridTextColumn Width="*" MinWidth="500" 
+									IsReadOnly="True"
 				                    Binding="{Binding FileName}"
 				                    Header="File Name" />
             </DataGrid.Columns>

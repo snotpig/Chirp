@@ -32,7 +32,6 @@ D:\Projects\GitHub\Chirp\Chirp\bin\x64\Debug\Microsoft.AspNetCore.Razor.Runtime.
 D:\Projects\GitHub\Chirp\Chirp\bin\x64\Debug\System.Diagnostics.DiagnosticSource.xml
 D:\Projects\GitHub\Chirp\Chirp\bin\x64\Debug\System.Text.Encodings.Web.xml
 D:\Projects\GitHub\Chirp\Chirp\bin\x64\Debug\policy.2.0.taglib-sharp.config
-D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\Chirp.csprojAssemblyReference.cache
 D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\AddShowDlg.g.cs
 D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\EditTypesDlg.g.cs
 D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\MainWindow.g.cs
@@ -50,3 +49,7 @@ D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\Chirp.csproj.CoreCompileInputs.cach
 D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\Chirp.csproj.CopyComplete
 D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\Chirp.exe
 D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\Chirp.pdb
+D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\GeneratedInternalTypeHelper.g.cs
+D:\Projects\GitHub\Chirp\Chirp\bin\x64\Debug\external_drive_lib.dll
+D:\Projects\GitHub\Chirp\Chirp\bin\x64\Debug\external_drive_lib.pdb
+D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\Chirp.csprojAssemblyReference.cache

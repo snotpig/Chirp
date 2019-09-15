@@ -57,6 +57,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="external_drive_lib">
+      <HintPath>..\packages\external_drive_lib\external_drive_lib.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -69,6 +72,7 @@
     <Reference Include="Microsoft.AspNetCore.Razor.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Razor.Runtime.1.0.0\lib\net451\Microsoft.AspNetCore.Razor.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.0.1\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
     </Reference>
@@ -152,12 +156,15 @@
     <Compile Include="AddShowDlg.xaml.cs">
       <DependentUpon>AddShowDlg.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Category.cs" />
+    <Compile Include="ConnectionState.cs" />
     <Compile Include="EditTypesDlg.xaml.cs">
       <DependentUpon>EditTypesDlg.xaml</DependentUpon>
     </Compile>
     <Compile Include="Chirper.cs" />
     <Compile Include="M4aFile.cs" />
     <Compile Include="NewShow.cs" />
+    <Compile Include="ColourConverter.cs" />
     <Compile Include="SaveObject.cs" />
     <Compile Include="Show.cs" />
     <Compile Include="ShowNames.cs" />

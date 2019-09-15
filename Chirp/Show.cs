@@ -2,7 +2,7 @@
 
 namespace Chirp
 {
-    public class Show
+	public class Show
     {
         public string ShowName { get; set; }
         public string ShortName { get; set; }
@@ -12,5 +12,7 @@ namespace Chirp
         public string Title { get; set; }
         public string FileName { get; set; }
         public string FilePath { get; set; }
-    }
+		public bool UseDate { get; set; }
+		public Category Category { get; set; }
+	}
 }

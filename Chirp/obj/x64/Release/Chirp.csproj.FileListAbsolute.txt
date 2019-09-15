@@ -50,3 +50,6 @@ D:\Projects\GitHub\Chirp\Chirp\obj\x64\Release\Chirp.csproj.CopyComplete
 D:\Projects\GitHub\Chirp\Chirp\obj\x64\Release\Chirp.exe
 D:\Projects\GitHub\Chirp\Chirp\obj\x64\Release\Chirp.pdb
 D:\Projects\GitHub\Chirp\Chirp\obj\x64\Release\Chirp.csprojAssemblyReference.cache
+D:\Projects\GitHub\Chirp\Chirp\obj\x64\Release\GeneratedInternalTypeHelper.g.cs
+D:\Projects\GitHub\Chirp\Chirp\bin\x64\Release\external_drive_lib.dll
+D:\Projects\GitHub\Chirp\Chirp\bin\x64\Release\external_drive_lib.pdb

@@ -3,36 +3,60 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:Chirp"
         mc:Ignorable="d"
-        Title="Add Show" Height="380" Width="650"
+        Title="Add Show" Height="380" Width="765"
         WindowStyle="ToolWindow"
-        WindowStartupLocation="CenterOwner">
-    <Grid>
+        WindowStartupLocation="CenterOwner"
+		ResizeMode="NoResize">
+	<Window.Resources>
+		<ObjectDataProvider x:Key="categories"
+                MethodName="GetValues"
+				ObjectType="{x:Type System:Enum}">
+			<ObjectDataProvider.MethodParameters>
+				<x:Type TypeName="local:Category" />
+			</ObjectDataProvider.MethodParameters>
+		</ObjectDataProvider>
+	</Window.Resources>
+	<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid Name="dgNew" AutoGenerateColumns="False" CanUserAddRows="false" Width="630">
+        <DataGrid Name="dgNew" AutoGenerateColumns="False" CanUserAddRows="false" Width="auto">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="330" MinWidth="40"
+                <DataGridTextColumn Width="328" MinWidth="40"
 				                    Binding="{Binding Name}"
 				                    Header="Show" />
-                <DataGridTextColumn Width="272" MinWidth="80"
+                <DataGridTextColumn Width="245" MinWidth="40"
 				                    Binding="{Binding ShortName}"
 				                    Header="Short Name" />
-                <DataGridTemplateColumn Width="20"  Header="">
+				<DataGridTemplateColumn Width="58"  Header="Use Date">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<CheckBox IsChecked="{Binding UseDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"></CheckBox>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridComboBoxColumn Header="Category" ItemsSource="{Binding Source={StaticResource categories}, Mode=OneTime}" SelectedValueBinding="{Binding Category}">
+				</DataGridComboBoxColumn>
+				<DataGridTemplateColumn Width="35"  Header="Add">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox IsChecked="{Binding Include, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+                            <CheckBox IsChecked="{Binding Include, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"></CheckBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" FlowDirection="RightToLeft">
-            <Button Name="btnAdd" Click="btnAdd_Click" Width="320">Add</Button>
-            <Button Name="btnCancel" Click="btnCancel_Click" Width="320">Cancel</Button>
-        </StackPanel>
+        <Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Name="btnAdd" Click="btnAdd_Click">Add</Button>
+            <Button Grid.Column="1" Name="btnCancel" Click="btnCancel_Click">Cancel</Button>
+        </Grid>
     </Grid>
 </Window>

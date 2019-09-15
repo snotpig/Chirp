@@ -8,6 +8,6 @@ namespace Chirp
     {
         public string Folder { get; set; }
         public HashSet<string> FileTypes { get; set; }
-        public List<ShowNames> Shows { get; set; }
+        public List<ShowData> Shows { get; set; }
     }
 }

@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:Chirp"
         mc:Ignorable="d"
         WindowStyle="ToolWindow"
-        Title="Edit Types" Height="250" Width="200"
-        WindowStartupLocation="CenterOwner">
+        Title="Edit Types" Height="270" Width="201"
+        WindowStartupLocation="CenterOwner"
+		ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
