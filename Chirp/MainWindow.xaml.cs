@@ -35,20 +35,30 @@ namespace Chirp
 
 		private void btnGo_Click(object sender, RoutedEventArgs e)
 		{
-			if (_shows.All(i => i.Date.HasValue || !i.UseDate))
-			{
-				progress.Value = 0;
-				btnGo.Visibility = Visibility.Collapsed;
-				progress.Visibility = Visibility.Visible;
+			var connectionState = _chirper.CheckPhoneConnectionState();
+			if (connectionState == ConnectionState.NotConnected)
+				MessageBox.Show("Phone not connected.", "Connection Problem!", MessageBoxButton.OK, MessageBoxImage.Error);
 
-				var worker = new BackgroundWorker
+			else if (connectionState == ConnectionState.Connected)
+				MessageBox.Show("MTP not enabled on phone.", "Connection Problem!", MessageBoxButton.OK, MessageBoxImage.Error);
+
+			else
+			{
+				if (_shows.All(i => i.Date.HasValue || !i.UseDate))
 				{
-					WorkerReportsProgress = true
-				};
-				worker.DoWork += Go;
-				worker.ProgressChanged += ProgressChanged;
-				worker.RunWorkerCompleted += Finish;
-				worker.RunWorkerAsync();
+					progress.Value = 0;
+					btnGo.Visibility = Visibility.Collapsed;
+					progress.Visibility = Visibility.Visible;
+
+					var worker = new BackgroundWorker
+					{
+						WorkerReportsProgress = true
+					};
+					worker.DoWork += Go;
+					worker.ProgressChanged += ProgressChanged;
+					worker.RunWorkerCompleted += Finish;
+					worker.RunWorkerAsync();
+				}
 			}
 		}
 
@@ -67,8 +77,6 @@ namespace Chirp
 		{
 			if (e.Error != null)
 				MessageBox.Show(e.Error.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-			else if (e.Result is string result && result != "Success")
-				MessageBox.Show(result, "Connection problem", MessageBoxButton.OK, MessageBoxImage.Warning);
 			GetShows();
 		}
 

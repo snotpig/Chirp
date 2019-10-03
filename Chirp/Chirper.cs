@@ -57,13 +57,6 @@ namespace Chirp
 
         public string Go(IEnumerable<Show> items, BackgroundWorker worker)
         {
-			var connectionState = CheckPhoneConnectionState();
-			if (connectionState == ConnectionState.NotConnected)
-				return "Phone not connected.";
-
-			if (connectionState == ConnectionState.Connected)
-				return "MTP not enabled on phone.";
-
 			SyncFolders(it => worker.ReportProgress(it));
 			var total = 2 * items.Count();
 			var i = 0;
@@ -204,7 +197,7 @@ namespace Chirp
 			file.copy_sync($@"{audio.full_path}/{category}");
 		}
 
-		private ConnectionState CheckPhoneConnectionState()
+		public ConnectionState CheckPhoneConnectionState()
 		{
 			var phone = drive_root.inst.drives.Where(d => d.type.is_portable())
 				.FirstOrDefault(d => d.friendly_name == "Redmi 3S");
@@ -242,8 +235,11 @@ namespace Chirp
 			var mf = 50 / total;
 			foreach (var file in pcFiles.SelectMany(c => c.Where(f => !phoneFiles[c.Key].Select(af => af.FileName).Contains(f.FileName))))
 			{
-				MoveFileToRecycleBin(file.FilePath);
-				reportProgress(50 - mf * total--);
+				if (File.GetCreationTime(file.FilePath) < DateTime.Now.Subtract(new TimeSpan(14, 0, 0, 0)))
+				{
+					MoveFileToRecycleBin(file.FilePath);
+					reportProgress(50 - mf * total--);
+				}
 			}
 		}
 
