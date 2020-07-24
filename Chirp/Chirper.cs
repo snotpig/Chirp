@@ -58,7 +58,7 @@ namespace Chirp
         public string Go(IEnumerable<Show> items, BackgroundWorker worker)
         {
 			SyncFolders(it => worker.ReportProgress(it));
-			var total = 2 * items.Count();
+			var total = items.Count();
 			var i = 0;
 			foreach (Show show in items)
 			{
@@ -70,12 +70,10 @@ namespace Chirp
 				var file = TagLib.File.Create(show.FilePath, TagLib.ReadStyle.None);
 				file.Tag.Title = $"{show.ShortName}{episode}{date}{title}";
 				file.Save();
-				i++;
-				worker.ReportProgress(50 + i * 100 / total);
 
 				MoveFile(show.FilePath, $"{showName}{episode}{date}{title}.m4a", show.Category);
 				i++;
-				worker.ReportProgress(50 + i * 100 / total);
+				worker.ReportProgress(i * 100 / total);
 			}
 			return "Success";
         }
