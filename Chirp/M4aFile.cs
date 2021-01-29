@@ -1,4 +1,6 @@
-﻿namespace Chirp
+﻿using System;
+
+namespace Chirp
 {
     public class M4aFile
     {
@@ -6,5 +8,7 @@
         public string FileName { get; set; }
         public string Type { get; set; }
         public string ShowFullName { get; set; }
+        public double Size { get; set; }
+        public DateTime Date { get; set; }
     }
 }

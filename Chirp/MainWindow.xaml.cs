@@ -1,4 +1,5 @@
 ﻿using log4net;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -26,7 +27,19 @@ namespace Chirp
 
 		private void GetShows()
 		{
-			_shows = new ObservableCollection<Show>(_chirper.GetShows());
+			_shows = new ObservableCollection<Show>(_chirper.GetShows().OrderBy(s =>  s.Size));
+			datagrid.ItemsSource = _shows;
+			progress.Visibility = Visibility.Collapsed;
+			btnGo.Visibility = Visibility.Visible;
+			btnGo.IsEnabled = _shows.Count > 0;
+		}
+
+		private void UpdateShows()
+		{
+			var shows = _chirper.GetShows();
+			_shows = new ObservableCollection<Show>(_shows.Where(s => shows.Any(show => s.FileName == show.FileName))
+				.Concat(shows.Where(s => !_shows.Any(show => s.FileName == show.FileName))));
+
 			datagrid.ItemsSource = _shows;
 			progress.Visibility = Visibility.Collapsed;
 			btnGo.Visibility = Visibility.Visible;
@@ -77,7 +90,8 @@ namespace Chirp
 		{
 			if (e.Error != null)
 				MessageBox.Show(e.Error.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-			GetShows();
+
+			UpdateShows();
 		}
 
 		private void btnFolder_Click(object sender, RoutedEventArgs e)

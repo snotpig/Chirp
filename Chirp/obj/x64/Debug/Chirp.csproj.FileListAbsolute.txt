@@ -45,7 +45,6 @@ D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\MainWindow.baml
 D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\Chirp.g.resources
 D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\Chirp.Properties.Resources.resources
 D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\Chirp.csproj.GenerateResource.cache
-D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\Chirp.csproj.CoreCompileInputs.cache
 D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\Chirp.csproj.CopyComplete
 D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\Chirp.exe
 D:\Projects\GitHub\Chirp\Chirp\obj\x64\Debug\Chirp.pdb

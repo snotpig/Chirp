@@ -47,9 +47,10 @@ namespace Chirp
                     Title = title.StartsWith("Episode") ? "" : title,
                     Series = s > 0 && show.Length > s ? int.Parse(show.ElementAt(s + 1)) : 0,
                     Episode = isEpisode ? episode : 0,
-                    Date = date == DateTime.MinValue ? new DateTime?() : date,
+                    Date = date != DateTime.MinValue ? date : _showData[showName].UseDate ? file.Date : (DateTime?)null,
 					UseDate = _showData[showName].UseDate,
-					Category = _showData[showName].Category
+					Category = _showData[showName].Category,
+                    Size = file.Size
 				};
             });
             return shows.ToList();
@@ -160,17 +161,20 @@ namespace Chirp
 
         private IEnumerable<M4aFile> GetAudioFiles()
         {
-            return Directory.EnumerateFiles(Folder, "*.m4a")
+            return new DirectoryInfo(Folder).GetFiles()
+                .Where(fi => fi.Extension == ".m4a")
                 .Select(file =>
                 {
-                    var fileName = Path.GetFileName(file);
+                    var fileName = file.Name;
                     var parts = fileName.Split(new[] { "_", ".m4a" }, StringSplitOptions.RemoveEmptyEntries);
                     return new M4aFile
                     {
-                        Path = file,
+                        Path = file.FullName,
                         FileName = fileName,
                         Type = parts.Last(),
-                        ShowFullName = string.Join("_", parts.Where((string s, int i) => i < parts.Length - 2 && (i < parts.Length - 3 || s != "-") ))
+                        ShowFullName = string.Join("_", parts.Where((string s, int i) => i < parts.Length - 2 && (i < parts.Length - 3 || s != "-") )),
+                        Size = file.Length,
+                        Date = file.CreationTime.AddHours(-6).Date
                     };
                 });
         }

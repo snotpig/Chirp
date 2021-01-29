@@ -14,5 +14,6 @@ namespace Chirp
         public string FilePath { get; set; }
 		public bool UseDate { get; set; }
 		public Category Category { get; set; }
-	}
+        public double Size { get; set; }
+    }
 }
