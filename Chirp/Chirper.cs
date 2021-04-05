@@ -233,15 +233,18 @@ namespace Chirp
 				.Select(f => new AudioFile(f.full_path, c)))
 				.ToLookup(f => f.Category);
 
+            if (!phoneFiles.Any())
+                return;
+
 			var total = phoneFiles.Count();
 			var mf = 50 / total;
-			foreach (var file in pcFiles.SelectMany(c => c.Where(f => !phoneFiles[c.Key].Select(af => af.FileName).Contains(f.FileName))))
+            var filesToDelete = pcFiles.SelectMany(c => c.Where(f => !phoneFiles[c.Key].Select(af => af.FileName).Contains(f.FileName)))
+                .Where(f => File.GetCreationTime(f.FilePath) < DateTime.Now.AddDays(-14));
+
+            foreach (var file in filesToDelete)
 			{
-				if (File.GetCreationTime(file.FilePath) < DateTime.Now.Subtract(new TimeSpan(14, 0, 0, 0)))
-				{
-					MoveFileToRecycleBin(file.FilePath);
-					reportProgress(50 - mf * total--);
-				}
+				MoveFileToRecycleBin(file.FilePath);
+				reportProgress(50 - mf * total--);
 			}
 		}
 
